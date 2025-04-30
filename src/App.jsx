@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import Carteirinha from "./Components/Carteirinha/Carteirinha"
 import Home from "./Components/Home/Home"
+import { UserStorage } from "./UserContext"
 
 function App() {
   const [path, setPath] = useState(window.location.pathname)
@@ -21,7 +22,11 @@ function App() {
     return <Home />
   }
 
-  return <div>{renderPage()}</div>
+  return (
+    <div>
+      <UserStorage>{renderPage()}</UserStorage>
+    </div>
+  )
 }
 
 export default App
