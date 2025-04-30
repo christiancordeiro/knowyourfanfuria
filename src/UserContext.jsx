@@ -1,10 +1,18 @@
 import React, { useEffect, useState, createContext } from "react"
+import {
+  fetchUserComment,
+  fetchUserPosts,
+  fetchUserUpvoted,
+} from "./AllFetchsReddit"
 
 export const UserContext = createContext()
 
 export const UserStorage = ({ children }) => {
   const [dados, setDados] = useState(null)
   const [token, setToken] = useState(null)
+  const [comment, setComment] = useState(null)
+  const [posts, setPosts] = useState(null)
+  const [upvoted, setUpvoted] = useState(null)
 
   const clientId = import.meta.env.VITE_REDDIT_CLIENT_ID
   const clientSecret = import.meta.env.VITE_REDDIT_CLIENT_SECRET
@@ -76,7 +84,10 @@ export const UserStorage = ({ children }) => {
         : null
 
       setDados(filteredData)
-      console.log("Dados do usuário:", filteredData)
+
+      fetchUserComment(accessToken, data.name, setComment) // Chama a função para buscar os comentários do usuário
+      fetchUserPosts(accessToken, data.name, setPosts) // Chama a função para buscar os posts do usuário
+      fetchUserUpvoted(accessToken, data.name, setUpvoted) // Chama a função para buscar os upvoted do usuário
     } catch (error) {
       console.error("Erro ao buscar dados do usuário:", error)
     }
@@ -102,7 +113,9 @@ export const UserStorage = ({ children }) => {
   //   if (!dados) return <div>Carregando usuário...</div>
 
   return (
-    <UserContext.Provider value={{ dados, token, handleRedditLogin }}>
+    <UserContext.Provider
+      value={{ dados, comment, posts, upvoted, token, handleRedditLogin }}
+    >
       {children}
     </UserContext.Provider>
   )

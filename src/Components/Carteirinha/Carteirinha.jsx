@@ -2,9 +2,10 @@ import Infos from "./Infos"
 import idCard from "../../assets/id-card.svg"
 import { useContext } from "react"
 import { UserContext } from "../../UserContext"
+import Loading from "./Loading"
 
 const Carteirinha = () => {
-  const { dados } = useContext(UserContext)
+  const { dados, comment, posts, upvoted } = useContext(UserContext)
 
   return (
     <div className="2xl: max-w-2xl 2xl:mx-auto sm:p-4 py-12">
@@ -45,9 +46,21 @@ const Carteirinha = () => {
             Interações Fúria:
           </h3>
           <div className="flex items-center justify-between px-20 sm:px-24">
-            <Infos info1="Posts" info2="10" />
-            <Infos info1="Upvoted" info2="30" />
-            <Infos info1="Comentários" info2="20" />
+            {typeof posts === "number" ? (
+              <Infos info1="Posts" info2={posts} />
+            ) : (
+              <Loading />
+            )}
+            {typeof comment === "number" ? (
+              <Infos info1="Comentários" info2={comment} />
+            ) : (
+              <Loading />
+            )}
+            {typeof upvoted === "number" ? (
+              <Infos info1="Upvoted" info2={upvoted} />
+            ) : (
+              <Loading />
+            )}
           </div>
           <h2 className="font-roboto font-extrabold text-3xl py-10 text-[#EDEDED]">
             Nível de fã: ultra
