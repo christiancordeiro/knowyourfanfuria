@@ -20,7 +20,7 @@ function Home() {
         onClick={handleRedditLogin}
         className="border-[0.1rem] border-[#F9F9F9] rounded-full hover:bg-[#F9F9F9] hover:text-black transition"
       >
-        <span className="flex items-center gap-4 font-inter text-2xl px-[2.625rem] py-[0.980rem]">
+        <span className="flex items-center gap-4 font-inter sm:text-2xl text-1xl sm:px-[2.625rem]  px-[1.625rem] py-[0.980rem]">
           <img src={redditIcon} />
           Conecte-se com o Reddit
         </span>
