@@ -104,8 +104,6 @@ export async function fetchUserUpvoted(accessToken, username, setUpvoted) {
     })
 
     setUpvoted(contadorUpvoted)
-
-    console.log("Upvoted do usuário:", filtered)
   } catch (error) {
     console.error("Erro ao buscar upvoted:", error)
   }

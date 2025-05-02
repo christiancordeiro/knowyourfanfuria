@@ -1,11 +1,39 @@
 import Infos from "./Infos"
 import idCard from "../../assets/id-card.svg"
-import { useContext } from "react"
+import { use, useContext, useEffect, useState } from "react"
 import { UserContext } from "../../UserContext"
 import Loading from "./Loading"
 
 const Carteirinha = () => {
   const { dados, comment, posts, upvoted } = useContext(UserContext)
+  const [nivel, setNivel] = useState("Aguarde, calculando...")
+
+  useEffect(() => {
+    if (
+      typeof comment !== "number" ||
+      typeof posts !== "number" ||
+      typeof upvoted !== "number"
+    ) {
+      return
+    }
+
+    const media = (comment + posts + upvoted) / 3
+    let result = ""
+
+    if (media < 0) {
+      result = "Novo fã"
+    } else if (media <= 5) {
+      result = "Fã iniciante"
+    } else if (media < 10) {
+      result = "Fã intermediário"
+    } else if (media < 20) {
+      result = "Fã ultra"
+    } else {
+      result = "Fã lendário"
+    }
+
+    setNivel(result)
+  }, [comment, posts, upvoted])
 
   return (
     <div className="2xl: max-w-2xl 2xl:mx-auto sm:p-4 py-12">
@@ -63,7 +91,7 @@ const Carteirinha = () => {
             )}
           </div>
           <h2 className="font-roboto font-extrabold text-3xl py-10 text-[#EDEDED]">
-            Nível de fã: ultra
+            Nível de fã: {nivel}
           </h2>
         </div>
       </div>
